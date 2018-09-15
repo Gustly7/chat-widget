@@ -3,15 +3,16 @@ let dbClass = require("./classes/dbClass.js");
 
 let q = new dbClass.dbClass();
 
-q.getUser(3).then(e => {
+q.getUsers().then(e => {
   console.log(e);
 })
 
-q.addMessage(1, 'test', {type:'manager', name: "Inav Ivanov"}).then(e => {
-  console.log(e);
-})
+myFunc = function (p) {
+  console.log(p);
+}
 
-// q.getDialog(1).then(e => {
-//   console.log(e);
-// })
+//Вызов слушателя в другом потоке
+setTimeout(function () {q.dbCollectionListener('main', myFunc)}, 1);
 
+//Вызов в основном потоке
+q.dbCollectionListener('users', myFunc);
