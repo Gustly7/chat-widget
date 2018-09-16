@@ -88,7 +88,7 @@ class dbClass {
       })
       .catch(err => {
         this.addConversation(pUserId);
-        this.addMessage(pUserId, message, pType);
+        return this.addMessage(pUserId, message, pType);
       });
   }
 
