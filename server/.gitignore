@@ -1,1 +1,9 @@
-# prevent folder delete
+node_modules/
+
+# src/classes/
+
+# assets/
+
+package-lock.json
+
+# database/

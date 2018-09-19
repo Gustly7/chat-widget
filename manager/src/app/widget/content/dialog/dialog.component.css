@@ -1,6 +1,8 @@
 .dialog {
     list-style-type: none;
     padding: 0;
+    height: 100%;
+    overflow-y: scroll;
 }
 .message {
     position: relative;
@@ -8,10 +10,14 @@
 }
 li.manager{
   text-align: right;
+  margin-right: 5px;
+}
+
+li.client{
+  margin-left: 5px;
 }
 
 li.manager span.triangle{
-  right: -5px;
   transform: rotate(180deg);
 }
 

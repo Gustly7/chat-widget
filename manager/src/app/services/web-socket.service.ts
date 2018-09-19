@@ -15,6 +15,7 @@ export class WebSocketService {
   clients$ = new Subject();
   dialog$ = new Subject();
   lastMessage$ = new Subject();
+  newClient$ = new Subject();
 
   activeUser: User;
 
@@ -34,8 +35,7 @@ export class WebSocketService {
         });
 
     this.ws.onopen = () => {
-      // this.send('getDialog', { token: 'qrzihx' })
-      // this.send('getAllClients')
+      this.send('getAllClients')
     };
 
     this.ws.onclose = () => {

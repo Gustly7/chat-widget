@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from './user.model';
 import {WebSocketService} from "../../../services/web-socket.service";
+import { log } from 'util';
 
 @Component({
   selector: 'app-navigation',
@@ -10,11 +11,7 @@ import {WebSocketService} from "../../../services/web-socket.service";
 export class NavigationComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private ws: WebSocketService) {
-    /*this.users.push({name: 'Aleksey'});
-    this.users.push({name: 'Peter'});
-    this.users.push({name: 'Василий'});*/
-  }
+  constructor(private ws: WebSocketService) { }
 
   ngOnInit() {
     this.ws.clients$
@@ -25,6 +22,11 @@ export class NavigationComponent implements OnInit {
           }
         })
       });
+
+    this.ws.newClient$
+      .subscribe( (data:any) => {
+        this.users.push(new User(data.name, data.token))
+      })
   }
 
   userClick(pUser: User) {
@@ -35,5 +37,4 @@ export class NavigationComponent implements OnInit {
     this.ws.activeUser = pUser;
     this.ws.send('getDialog', {token: pUser.id});
   }
-
 }

@@ -10,27 +10,24 @@ export class DialogComponent implements OnInit {
   messages = [];
 
   constructor(private ws: WebSocketService) {
-    /*this.messages = [
-      {
-        'sender': 'client',
-        'text': 'Хочу купить рамку планетарий'
-      },
-      {
-        'sender': 'manager',
-        'text': 'Очень хорошо, 9 тысяч'
-      },
-    ];*/
   }
 
   ngOnInit() {
     this.ws.dialog$
       .subscribe((data: object[]) => {
-          this.messages = data;
+          this.messages = data || [];
         }
       );
 
     this.ws.lastMessage$
-      .subscribe(data => this.messages.push(data));
+      .subscribe((data: any) => {
+        if (this.ws.activeUser.id === data.token)
+          this.messages.push(data.message)
+      });
+  }
+
+  ngAfterViewChecked() {
+    document.getElementById('dialog').scrollTop = document.getElementById('dialog').scrollHeight;
   }
 
 }
