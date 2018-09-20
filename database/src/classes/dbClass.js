@@ -5,8 +5,14 @@ class dbClass {
     this.FieldValue = require('firebase-admin').firestore.FieldValue;
     let serviceAccount = require('../../assets/chatwidget-abc-firebase-adminsdk-5ivff-602aa740ba.json');
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      databaseURL: 'https://chatwidget-abc.firebaseio.com'
+      //credential: admin.credential.cert(serviceAccount),
+      //databaseURL: 'https://chatwidget2.firebaseio.com'
+      apiKey: "AIzaSyCXWnfpK9prBojhad5dOxnfSP3v1xD3g0g",
+      authDomain: "chatwidget2.firebaseapp.com",
+      databaseURL: "https://chatwidget2.firebaseio.com",
+      projectId: "chatwidget2",
+      storageBucket: "chatwidget2.appspot.com",
+      messagingSenderId: "826197899965"
     });
     this.firestore = admin.firestore();
     let settings = {/* your settings... */ timestampsInSnapshots: true};
@@ -87,8 +93,10 @@ class dbClass {
         return convData.messages[convData.messages.length - 1];
       })
       .catch(err => {
-        this.addConversation(pUserId);
-        return this.addMessage(pUserId, message, pType);
+        if (err == 'TypeError: Cannot read property \'messages\' of undefined') {
+          this.addConversation(pUserId);
+          return this.addMessage(pUserId, message, pType);
+        }
       });
   }
 
